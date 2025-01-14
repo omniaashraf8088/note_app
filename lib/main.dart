@@ -8,11 +8,14 @@ import 'package:note_app/home/model/hive_constant.dart';
 import 'package:note_app/home/model/word_type_adptor.dart';
 import 'package:note_app/home/view/screens/home_screen.dart';
 
+import 'core/observer/bloc_observer.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
-  await Hive.openBox(HiveConstant.wordBox);
   Hive.registerAdapter(WordTypeAdptor());
+  await Hive.openBox(HiveConstant.wordBox);
+  Bloc.observer = AppBlocObserver();
 
   runApp(NoteApp());
 }
@@ -24,8 +27,8 @@ class NoteApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context)=>ReadDataCubit()),
-         BlocProvider(create: (context)=>WriteDataCubit())
+        BlocProvider(create: (context) => ReadDataCubit()..getWords()),
+        BlocProvider(create: (context) => WriteDataCubit())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

@@ -1,11 +1,24 @@
+import 'dart:math';
+
+import 'package:hive/hive.dart';
+
+@HiveType(typeId: 0)
 class WordModel {
+  @HiveField(0)
   final String text;
+  @HiveField(1)
   final bool isArabic;
+  @HiveField(2)
   final int indexAtDatabase;
+  @HiveField(3)
   final int colorCode;
+  @HiveField(4)
   final List<String>? arabicSimilarWords;
+  @HiveField(5)
   final List<String>? englishSimilarWords;
+  @HiveField(6)
   final List<String>? arabicExamples;
+  @HiveField(7)
   final List<String>? englishExamples;
 
   WordModel({
@@ -20,11 +33,16 @@ class WordModel {
   });
 
   WordModel decrementIndexAtDatabase(int indexAtDatabase) {
-    return WordModel(
-        text: text,
-        isArabic: isArabic,
-        indexAtDatabase: indexAtDatabase - 1,
-        colorCode: colorCode);
+      return WordModel(
+          text: text,
+          isArabic: isArabic,
+          indexAtDatabase: max(0, indexAtDatabase - 1), // Prevent negative indices
+          colorCode: colorCode,
+          arabicSimilarWords: arabicSimilarWords,
+          englishSimilarWords: englishSimilarWords,
+          arabicExamples: arabicExamples,
+          englishExamples: englishExamples,
+      );
   }
 
   WordModel incrementIndexAtDatabase(int indexAtDatabase) {

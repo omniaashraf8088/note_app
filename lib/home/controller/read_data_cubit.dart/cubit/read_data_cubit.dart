@@ -4,38 +4,44 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 import 'package:note_app/home/model/hive_constant.dart';
 import 'package:note_app/home/model/word_model.dart';
-
 part 'read_data_state.dart';
 
 class ReadDataCubit extends Cubit<ReadDataState> {
-  static get(context) => BlocProvider.of(context);
+  static ReadDataCubit get(context) => BlocProvider.of(context);
   ReadDataCubit() : super(ReadDataInitiState());
   final Box box = Hive.box(HiveConstant.wordBox);
   LanguageFilter languageFilter = LanguageFilter.allWords;
   SortedBy sortedBy = SortedBy.time;
-  SortingType sortingType = SortingType.descening;
+  SortingType sortingType = SortingType.Descending;
 
-  void updateLanguageFilter(LanguageFilter LanguageFilter) {}
+  void updateLanguageFilter(LanguageFilter LanguageFilter) {
+    this.languageFilter = LanguageFilter;
+    getWords();
+  }
+
   void updateSortedBy(SortedBy sortedBy) {
     this.sortedBy = sortedBy;
+    getWords();
   }
 
   void updateSortingType(SortingType sortingType) {
     this.sortingType = sortingType;
+    getWords();
   }
 
   void getWords() {
     try {
       emit(ReadDataLoadingState());
-    } catch (error) {
       List<WordModel> wordReturn =
           List.from(box.get(HiveConstant.WordList, defaultValue: [])).cast();
       RemoveUnWantedWord(wordReturn);
       applySortedBy(wordReturn);
       //لو شال الكلمه الغير مطلوبه وبعدين رتبهم المفروض لو ص نكمل لخطوه النهائيه
       emit(ReadDataSucceState(words: wordReturn));
+    } catch (error) {
       emit(ReadDataFaildState(
           message: "we have a prblem , please trying later!"));
+      throw Exception();
     }
   }
 
@@ -57,7 +63,7 @@ class ReadDataCubit extends Cubit<ReadDataState> {
 
   void applySortedBy(List<WordModel> returnWord) {
     if (sortedBy == SortedBy.time) {
-      if (sortingType == SortingType.descening) {
+      if (sortingType == SortingType.Descending) {
         return;
       } else {
         return reverse(returnWord);
@@ -65,7 +71,7 @@ class ReadDataCubit extends Cubit<ReadDataState> {
     } else {
       returnWord.sort(
           (WordModel a, WordModel b) => a.text.length.compareTo(b.text.length));
-      if (sortingType == SortingType.descening) {
+      if (sortingType == SortingType.Descending) {
         return;
       } else {
         return reverse(returnWord);
@@ -88,7 +94,7 @@ enum LanguageFilter {
   allWords,
 }
 
-enum SortingType { descening, increning }
+enum SortingType { Descending, Ascending }
 
 enum SortedBy {
   wordLength,
