@@ -47,17 +47,19 @@ class _UpdateWordDialogState extends State<UpdateWordDialog> {
                   children: [
                     ArabicOrEngWidget(
                       cololrCode: widget.cololrCode,
-                      isArabicIsSelected:
-                          WriteDataCubit.get(context).isArabic,
+                      isArabicIsSelected: WriteDataCubit.get(context).isArabic,
                     ),
                     SizedBox(
                       height: 20,
                     ),
                     CustomForm(
                         formKey: formKey,
-                        controller: widget.isExample ? WriteDataCubit.get(context).expamleEditingController : WriteDataCubit.get(context).similerEditingController,
-                        lable:
-                            widget.isExample ? "New Example" : "Similar word"),
+                        controller: widget.isExample
+                            ? WriteDataCubit.get(context)
+                                .expamleEditingController
+                            : WriteDataCubit.get(context)
+                                .similerEditingController,
+                        lable: widget.isExample ? "Task" : "Sub Task"),
                     SizedBox(
                       height: 20,
                     ),

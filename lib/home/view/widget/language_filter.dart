@@ -12,7 +12,8 @@ class LanguageFilterCustomWidget extends StatelessWidget {
     return BlocBuilder<ReadDataCubit, ReadDataState>(
       builder: (context, state) {
         return Text(
-          mapLanguageFilterEnumtoString(ReadDataCubit.get(context).languageFilter),
+          mapLanguageFilterEnumtoString(
+              ReadDataCubit.get(context).languageFilter),
           style: TextStyle(
             fontSize: 21,
             fontWeight: FontWeight.bold,
@@ -23,15 +24,14 @@ class LanguageFilterCustomWidget extends StatelessWidget {
     );
   }
 
-
-  String mapLanguageFilterEnumtoString(LanguageFilter languageFilter){
-    if(languageFilter == LanguageFilter.allWords){
-      return 'All Words';
-    }else if (languageFilter == LanguageFilter.arabicOnly) {
-      return 'arabicOnly';
+  String mapLanguageFilterEnumtoString(LanguageFilter languageFilter) {
+    if (languageFilter == LanguageFilter.allWords) {
+      return 'All Task';
+    } else if (languageFilter == LanguageFilter.arabicOnly) {
+      return 'Arabic Task';
     }
     if (languageFilter == LanguageFilter.englishOnly) {
-      return 'englishOnly';
+      return 'English Task';
     }
     return '';
   }

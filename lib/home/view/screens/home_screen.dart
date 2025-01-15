@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:note_app/core/utils/app_colors.dart';
-import 'package:note_app/home/model/word_model.dart';
 import 'package:note_app/home/view/widget/add_word_dialog.dart';
 import 'package:note_app/home/view/widget/filter_dialog_button.dart';
 import 'package:note_app/home/view/widget/language_filter.dart';
@@ -14,7 +13,7 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       floatingActionButton: getFloatingActionButton(context),
       appBar: AppBar(
-        title: Text('Home'),
+        title: Text('Note App',style:TextStyle(fontWeight:FontWeight.bold)),
       ),
       body: Padding(
         padding: const EdgeInsets.all(10),

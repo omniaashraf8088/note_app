@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:note_app/core/utils/app_colors.dart';
 
 class WordInfoWidget extends StatelessWidget {
   const WordInfoWidget(
@@ -22,7 +23,7 @@ class WordInfoWidget extends StatelessWidget {
         children: [
           getIsArabicWidget(),
           SizedBox(
-            height: 10,
+            width: 10,
           ),
           Expanded(child: getTextWidget()),
           if (onPressed != null)
@@ -38,10 +39,12 @@ class WordInfoWidget extends StatelessWidget {
   }
 
   Text getTextWidget() {
-    return Text(
-      text,
-      style: TextStyle(fontSize: 21, color: color, fontWeight: FontWeight.bold),
-    );
+    return Text(text,
+        style: TextStyle(
+          fontSize: 21,
+          color: AppColors.baseColor2,
+          fontWeight: FontWeight.bold,
+        ));
   }
 
   CircleAvatar getIsArabicWidget() {

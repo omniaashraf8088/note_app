@@ -59,7 +59,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
     return ListView(
       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       children: [
-        getLabelText("Word"),
+        getLabelText("Task To Do"),
         SizedBox(
           height: 5,
         ),
@@ -74,7 +74,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
         ),
         Row(
           children: [
-            getLabelText("Similar Word"),
+            getLabelText("Task"),
             Spacer(),
             UpdateWordButton(
               onTap: () => showDialog(
@@ -111,7 +111,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
         ),
         Row(
           children: [
-            getLabelText("Examples"),
+            getLabelText("Sub Task"),
             Spacer(),
             UpdateWordButton(
               onTap: () => showDialog(
@@ -169,7 +169,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
   void deleteArabicExample(int index) {
     WriteDataCubit.get(context).deleteExample(
       indexAtDatabase: _wordModel.indexAtDatabase,
-      indexExampleWord: index,  
+      indexExampleWord: index,
       isArabicExample: true,
     );
 
@@ -197,8 +197,9 @@ class _DetailsScreenState extends State<DetailsScreen> {
     return AppBar(
       foregroundColor: Color(_wordModel.colorCode),
       title: Text(
-        "Word Details",
-        style: TextStyle(color: Color(_wordModel.colorCode)),
+        "Task Details",
+        style: TextStyle(
+            color: Color(_wordModel.colorCode), fontWeight: FontWeight.bold),
       ),
       actions: [
         IconButton(
