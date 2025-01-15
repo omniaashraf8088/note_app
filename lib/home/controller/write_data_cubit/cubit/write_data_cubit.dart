@@ -14,7 +14,11 @@ class WriteDataCubit extends Cubit<WriteDataState> {
   String text = "";
   bool isArabic = true;
   int colorCode = 0xff9ed2c6;
-  final TextEditingController textEditingController = TextEditingController();
+  final TextEditingController wordEditingController = TextEditingController();
+  final TextEditingController similerEditingController =
+      TextEditingController();
+  final TextEditingController expamleEditingController =
+      TextEditingController();
 
   void updateText(String text) {
     this.text = text;
@@ -35,7 +39,7 @@ class WriteDataCubit extends Cubit<WriteDataState> {
     try {
       List<WordModel> words = getDataFromHiveBase();
       words.add(WordModel(
-          text: textEditingController.text.trim(),
+          text: wordEditingController.text.trim(),
           isArabic: isArabic,
           indexAtDatabase: words.length,
           colorCode: colorCode));
@@ -82,8 +86,11 @@ class WriteDataCubit extends Cubit<WriteDataState> {
       List.from(box.get(HiveConstant.WordList, defaultValue: []))
           .cast<WordModel>();
 
-  void deleteSimilarWord(
-      int indexAtDatabase, bool isArabicSimilarWord, int indexAtSimilarWord) {
+  void deleteSimilarWord({
+    required int indexAtDatabase,
+    required bool isArabicSimilarWord,
+    required int indexAtSimilarWord,
+  }) {
     emit(WriteDataLoadinglState());
     try {
       List<WordModel> words = getDataFromHiveBase();
@@ -92,8 +99,7 @@ class WriteDataCubit extends Cubit<WriteDataState> {
       box.put(HiveConstant.WordList, words);
       emit(WriteDataSuccessState());
     } catch (e) {
-      emit(WriteDataFailureState(
-          message: 'Error deleting similar word. Please try again'));
+      emit(WriteDataFailureState(message: e.toString()));
     }
   }
 
@@ -102,8 +108,8 @@ class WriteDataCubit extends Cubit<WriteDataState> {
     try {
       List<WordModel> words = getDataFromHiveBase();
       if (indexAtDatabase >= 0 && indexAtDatabase < words.length) {
-        words[indexAtDatabase] =
-            words[indexAtDatabase].addExample(text, isArabic);
+        words[indexAtDatabase] = words[indexAtDatabase]
+            .addExample(expamleEditingController.text.trim(), isArabic);
         box.put(HiveConstant.WordList, words);
         emit(WriteDataSuccessState());
       } else {
@@ -119,8 +125,8 @@ class WriteDataCubit extends Cubit<WriteDataState> {
     try {
       List<WordModel> words = getDataFromHiveBase();
       if (indexAtDatabase >= 0 && indexAtDatabase < words.length) {
-        words[indexAtDatabase] =
-            words[indexAtDatabase].addSimilarWord(isArabic, text);
+        words[indexAtDatabase] = words[indexAtDatabase]
+            .addSimilarWord(isArabic, similerEditingController.text.trim());
         box.put(HiveConstant.WordList, words);
         emit(WriteDataSuccessState());
       } else {
@@ -132,17 +138,18 @@ class WriteDataCubit extends Cubit<WriteDataState> {
   }
 
   void deleteExample(
-      int indexAtDatabase, bool isArabicSimilarWord, int indexAtSimilarWord) {
+      {required int indexAtDatabase,
+      required bool isArabicExample,
+      required int indexExampleWord}) {
     emit(WriteDataLoadinglState());
     try {
       List<WordModel> words = getDataFromHiveBase();
       words[indexAtDatabase] = words[indexAtDatabase]
-          .deleteExample(isArabicSimilarWord, indexAtSimilarWord);
+          .deleteExample(isArabicExample, indexExampleWord);
       box.put(HiveConstant.WordList, words);
       emit(WriteDataSuccessState());
     } catch (e) {
-      emit(WriteDataFailureState(
-          message: 'Error deleting example. Please try again'));
+      emit(WriteDataFailureState(message: e.toString()));
     }
   }
 }

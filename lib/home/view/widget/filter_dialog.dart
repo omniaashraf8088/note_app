@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:note_app/core/utils/app_colors.dart';
 import 'package:note_app/home/controller/read_data_cubit.dart/cubit/read_data_cubit.dart';
 
 class FilterDialog extends StatelessWidget {
@@ -12,7 +13,7 @@ class FilterDialog extends StatelessWidget {
     return BlocBuilder<ReadDataCubit, ReadDataState>(
       builder: (context, state) {
         return Dialog(
-          backgroundColor: Colors.black,
+          backgroundColor: AppColors.baseColor5,
           child: Padding(
             padding: const EdgeInsets.all(15),
             child: Column(
@@ -107,18 +108,21 @@ Widget getFilterField({
         InkWell(
           onTap: onTap[i],
           child: Container(
+            padding: EdgeInsets.all(10),
             height: 40,
             margin: EdgeInsets.only(right: 10),
             decoration: BoxDecoration(
               border: Border.all(color: Colors.white),
               borderRadius: BorderRadius.circular(15),
-              color: conditionIsActivtion[i] ? Colors.white : Colors.black,
+              color:
+                  conditionIsActivtion[i] ? Colors.white : AppColors.baseColor3,
             ),
             child: Center(
               child: Text(labels[i],
                   style: TextStyle(
-                    color:
-                        conditionIsActivtion[i] ? Colors.black : Colors.white,
+                    color: conditionIsActivtion[i]
+                        ? AppColors.baseColor3
+                        : Colors.white,
                   )),
             ),
           ),

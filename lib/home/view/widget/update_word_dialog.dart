@@ -55,8 +55,9 @@ class _UpdateWordDialogState extends State<UpdateWordDialog> {
                     ),
                     CustomForm(
                         formKey: formKey,
+                        controller: widget.isExample ? WriteDataCubit.get(context).expamleEditingController : WriteDataCubit.get(context).similerEditingController,
                         lable:
-                            widget.isExample ? "New Examle" : "Similar word"),
+                            widget.isExample ? "New Example" : "Similar word"),
                     SizedBox(
                       height: 20,
                     ),

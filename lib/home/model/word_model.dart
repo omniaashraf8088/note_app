@@ -33,16 +33,16 @@ class WordModel {
   });
 
   WordModel decrementIndexAtDatabase(int indexAtDatabase) {
-      return WordModel(
-          text: text,
-          isArabic: isArabic,
-          indexAtDatabase: max(0, indexAtDatabase - 1), // Prevent negative indices
-          colorCode: colorCode,
-          arabicSimilarWords: arabicSimilarWords,
-          englishSimilarWords: englishSimilarWords,
-          arabicExamples: arabicExamples,
-          englishExamples: englishExamples,
-      );
+    return WordModel(
+      text: text,
+      isArabic: isArabic,
+      indexAtDatabase: max(0, indexAtDatabase - 1), // Prevent negative indices
+      colorCode: colorCode,
+      arabicSimilarWords: arabicSimilarWords,
+      englishSimilarWords: englishSimilarWords,
+      arabicExamples: arabicExamples,
+      englishExamples: englishExamples,
+    );
   }
 
   WordModel incrementIndexAtDatabase(int indexAtDatabase) {
@@ -59,20 +59,18 @@ class WordModel {
     return getExampleWordAfterCheckModelist(isArabicExample, newExampleWords);
   }
 
-  WordModel addExample(String example, isArabicExample) {
+  WordModel addExample(String example, bool isArabicExample) {
     List<String> newExampleWords = initializeNewExampleWord(isArabicExample);
+    newExampleWords.add(example);
     return getExampleWordAfterCheckModelist(isArabicExample, newExampleWords);
   }
 
-  List<String> initializeNewExampleWord(
-    isArabicExample,
-  ) {
+  List<String> initializeNewExampleWord(bool isArabicExample) {
     if (isArabicExample) {
-      arabicExamples;
+      return List.from(arabicExamples ?? []);
     } else {
-      englishExamples;
+      return List.from(englishExamples ?? []);
     }
-    return initializeNewExampleWord(isArabicExample);
   }
 
   WordModel addSimilarWord(bool isArabicSimilarWords, String similarWord) {
@@ -109,6 +107,8 @@ class WordModel {
           isArabicSimilarWords ? newSimilarWords : arabicSimilarWords,
       englishSimilarWords:
           !isArabicSimilarWords ? newSimilarWords : englishSimilarWords,
+      arabicExamples: arabicExamples,
+      englishExamples: englishExamples,
     );
   }
 

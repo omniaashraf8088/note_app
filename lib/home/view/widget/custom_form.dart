@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:note_app/home/controller/write_data_cubit/cubit/write_data_cubit.dart';
 
 class CustomForm extends StatelessWidget {
-  const CustomForm({super.key, required this.formKey, required this.lable});
+  const CustomForm({super.key,
+  required this.controller,
+  required this.formKey, required this.lable});
   final String lable;
   final GlobalKey<FormState> formKey;
+  final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +15,7 @@ class CustomForm extends StatelessWidget {
         key: formKey,
         child: TextFormField(
           autocorrect: true,
-          controller: WriteDataCubit.get(context).textEditingController,
+          controller: controller,
           validator: (value) {
             return getValidator(value, WriteDataCubit.get(context).isArabic)
                 ?.call(value);

@@ -6,10 +6,10 @@ class ColorWidget extends StatelessWidget {
   final int activeColor;
   final List<int> codeColorsList = const [
     0xff9ed2c6, // Soft Teal
-    0xffff9a8c, // Coral Pink
-    0xff6c5b7b, // Deep Lavender
-    0xffffd93d, // Bright Yellow
-    0xff4a90e2, // Ocean Blue
+    0xFF4682B4, // Coral Pink
+    0xffd9c2a6e, // Deep Lavender
+    0xffd9c2a6, // Bright Yellow
+    0xFFB0C4DE, // Ocean Blue
   ];
   @override
   Widget build(BuildContext context) {

@@ -82,12 +82,15 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 builder: (context) => UpdateWordDialog(
                   indexOfDataBase: _wordModel.indexAtDatabase,
                   cololrCode: _wordModel.colorCode,
-                  isExample: true,
+                  isExample: false,
                 ),
               ),
               color: Color(_wordModel.colorCode),
             )
           ],
+        ),
+        SizedBox(
+          height: 10,
         ),
         if (_wordModel.arabicSimilarWords != null)
           for (int i = 0; i < _wordModel.arabicSimilarWords!.length; i++)
@@ -116,7 +119,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 builder: (context) => UpdateWordDialog(
                   indexOfDataBase: _wordModel.indexAtDatabase,
                   cololrCode: _wordModel.colorCode,
-                  isExample: false,
+                  isExample: true,
                 ),
               ),
               color: Color(_wordModel.colorCode),
@@ -145,28 +148,40 @@ class _DetailsScreenState extends State<DetailsScreen> {
   }
 
   void deleteArabicSimilarWord(int index) {
-    WriteDataCubit.get(context)
-        .deleteSimilarWord(index, true, _wordModel.indexAtDatabase);
+    WriteDataCubit.get(context).deleteSimilarWord(
+      indexAtDatabase: _wordModel.indexAtDatabase,
+      isArabicSimilarWord: true,
+      indexAtSimilarWord: index,
+    );
 
     ReadDataCubit.get(context).getWords();
   }
 
   void deleteEnglishSimilarWord(int index) {
-    WriteDataCubit.get(context)
-        .deleteSimilarWord(index, false, _wordModel.indexAtDatabase);
+    WriteDataCubit.get(context).deleteSimilarWord(
+      indexAtDatabase: _wordModel.indexAtDatabase,
+      isArabicSimilarWord: false,
+      indexAtSimilarWord: index,
+    );
     ReadDataCubit.get(context).getWords();
   }
 
   void deleteArabicExample(int index) {
-    WriteDataCubit.get(context)
-        .deleteExample(index, true, _wordModel.indexAtDatabase);
+    WriteDataCubit.get(context).deleteExample(
+      indexAtDatabase: _wordModel.indexAtDatabase,
+      indexExampleWord: index,  
+      isArabicExample: true,
+    );
 
     ReadDataCubit.get(context).getWords();
   }
 
   void deleteEnglishExample(int index) {
-    WriteDataCubit.get(context)
-        .deleteExample(index, false, _wordModel.indexAtDatabase);
+    WriteDataCubit.get(context).deleteExample(
+      indexAtDatabase: _wordModel.indexAtDatabase,
+      indexExampleWord: index,
+      isArabicExample: false,
+    );
     ReadDataCubit.get(context).getWords();
   }
 

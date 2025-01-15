@@ -52,6 +52,8 @@ class _AddWordDialogState extends State<AddWordDialog> {
                   SizedBox(height: 10),
                   CustomForm(
                     formKey: formKey,
+                    controller:
+                        WriteDataCubit.get(context).wordEditingController,
                     lable: 'New Word',
                   ),
                   SizedBox(height: 15),
